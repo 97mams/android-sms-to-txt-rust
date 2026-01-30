@@ -1,0 +1,6 @@
+   0.055150442s  INFO cargo::core::compiler::fingerprint: fingerprint dirty for rust v0.1.0 (/home/penjy/Documents/PROJECTS/rust/sms/rust)/Check { test: false }/TargetInner { name: "rust", doc: true, ..: with_path("/home/penjy/Documents/PROJECTS/rust/sms/rust/src/main.rs", Edition2021) }
+   0.055355161s  INFO cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(Stale)
+   0.055692226s  INFO cargo::core::compiler::fingerprint: fingerprint dirty for rust v0.1.0 (/home/penjy/Documents/PROJECTS/rust/sms/rust)/Check { test: true }/TargetInner { name: "rust", doc: true, ..: with_path("/home/penjy/Documents/PROJECTS/rust/sms/rust/src/main.rs", Edition2021) }
+   0.055753309s  INFO cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(Stale)
+    Checking rust v0.1.0 (/home/penjy/Documents/PROJECTS/rust/sms/rust)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.38s
