@@ -1,83 +1,52 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+// Emplacement : /SmsBackupApp/app/build.gradle.kts
 
 plugins {
     id("com.android.application")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
 }
 
-val APP_VERSION_NAME : String by project
-val APP_VERSION_CODE : String by project
-val APP_ID : String by project
-
 android {
-    compileSdk = libs.versions.compile.sdk.version.get().toInt()
+    namespace = "com.example.smsLogger"
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = libs.versions.min.sdk.version.get().toInt()
-        namespace = APP_ID
+        applicationId = "com.example.smsLogger"
+        minSdk = 26 // Supporte Android 8.0 et +
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
-        applicationId = APP_ID
-        versionCode = APP_VERSION_CODE.toInt()
-        versionName = APP_VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildFeatures {
-        viewBinding = true
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+        release {
+            isMinifyEnabled = true // Active l'optimisation (réduit la taille de l'APK)
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
-
-    lint {
-        warningsAsErrors = true
-        abortOnError = true
-        disable.add("GradleDependency")
+    
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
-
-    // Use this block to configure different flavors
-//    flavorDimensions("version")
-//    productFlavors {
-//        create("full") {
-//            dimension = "version"
-//            applicationIdSuffix = ".full"
-//        }
-//        create("demo") {
-//            dimension = "version"
-//            applicationIdSuffix = ".demo"
-//        }
-//    }
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+    
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    implementation(projects.libraryAndroid)
-    implementation(projects.libraryCompose)
-    implementation(projects.libraryKotlin)
+    // Dépendances minimales pour le système Android
+    implementation("androidx.core:core-ktx:1.12.0")
+    
+    // Pour gérer les services d'arrière-plan modernes (WorkManager)
+    // Utile si tu veux que la sauvegarde soit ultra-robuste
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraint.layout)
-    implementation(libs.androidx.core.ktx)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
-    androidTestImplementation(libs.androidx.test.rules)
-    androidTestImplementation(libs.espresso.core)
+    // Note : On ne met pas "implementation(androidx.appcompat:appcompat)" 
+    // car on ne veut aucune interface graphique.
 }
